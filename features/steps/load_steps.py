@@ -50,3 +50,13 @@ def step_impl(context):
         #
         # ADD YOUR CODE HERE TO CREATE PRODUCTS VIA THE REST API
         #
+        new_product = {
+            "name": row["name"],
+            "description": row["description"],
+            "price": float(row["price"]),
+            "available": row["available"].lower() == "true",
+            "category": row["category"]
+        }
+
+        context.resp = requests.post(rest_endpoint, json=new_product)
+        assert(context.resp.status_code == HTTP_201_CREATED)

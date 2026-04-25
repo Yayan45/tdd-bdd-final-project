@@ -105,7 +105,23 @@ def step_impl(context, element_name):
 ##################################################################
 
 ## UPDATE CODE HERE ##
+## UPDATE CODE HERE ##
 
+@when('I press the "{button}" button')
+def step_impl(context, button):
+    element_id = button.lower() + "-btn"
+    element = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.presence_of_element_located((By.ID, element_id))
+    )
+    element.click()
+
+
+@then('I should see the message "{message}"')
+def step_impl(context, message):
+    element = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.presence_of_element_located((By.ID, "flash_message"))
+    )
+    assert(message in element.text)
 ##################################################################
 # This code works because of the following naming convention:
 # The id field for text input in the html is the element name
